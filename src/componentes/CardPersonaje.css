@@ -10,7 +10,7 @@
 /* En celular, más chica aún */
 @media (max-width: 576px) {
   .personaje-img {
-    width: 60%;
+    width: 40%;
     max-width: 200px;
   }
 }
