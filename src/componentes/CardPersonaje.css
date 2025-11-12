@@ -1,0 +1,16 @@
+
+/* Tamaño más chico y centrado */
+.personaje-img {
+  display: block;
+  width: 70%;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+/* En celular, más chica aún */
+@media (max-width: 576px) {
+  .personaje-img {
+    width: 60%;
+    max-width: 200px;
+  }
+}

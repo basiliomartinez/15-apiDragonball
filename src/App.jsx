@@ -5,51 +5,51 @@ import { Button, Spinner } from "react-bootstrap";
 
 function App() {
   const [personaje, setPersonaje] = useState({});
-  const [mostrarSpinner, setMostrarSpinner] = useState (true)
+  const [mostrarSpinner, setMostrarSpinner] = useState(true);
 
   useEffect(() => {
     obtenerPersonaje();
   }, []);
 
-
   const obtenerPersonaje = async () => {
     try {
-      setMostrarSpinner(true)
+      setMostrarSpinner(true);
       const numeroAleatorio = Math.floor(Math.random() * 58) + 1;
       const response = await fetch(
-        `https://dragonball-api.com/api/characters/ ${numeroAleatorio}`
+        // OJO: sin espacio antes del número
+        `https://dragonball-api.com/api/characters/${numeroAleatorio}`
       );
-      console.log(response);
+
       if (response.status === 200) {
         const datos = await response.json();
-        console.log(datos);
         setPersonaje(datos);
-setMostrarSpinner(false)
-      } else if (response.status === 400) {
-        alert("No se pudo obetener los datos del personaje");
+      } else {
+        alert("No se pudo obtener los datos del personaje");
       }
     } catch (error) {
       console.error(error);
+      alert("Ocurrió un error al obtener el personaje");
+    } finally {
+      setMostrarSpinner(false);
     }
   };
 
   return (
-    <>
-      <main className="container text-center">
-<img src={logo} alt="logo dragon ball Z" className="mt-3" /> 
-<div>
-           {
-           mostrarSpinner ?  <Spinner className="mt-3" animation="grow" variant="warning" /> : 
-        <CardPersonaje personaje={personaje}></CardPersonaje>
-           }
-        </div>
-      
-          <Button className="my-1" variant="warning" onClick={obtenerPersonaje}>
-          Obtener Personaje
-        </Button> 
-        
-      </main>
-    </>
+    <main className="container text-center">
+      <img src={logo} alt="logo dragon ball Z" className="mt-3 img-fluid" />
+
+      <div>
+        {mostrarSpinner ? (
+          <Spinner className="mt-3" animation="grow" variant="warning" />
+        ) : (
+          <CardPersonaje personaje={personaje} />
+        )}
+      </div>
+
+      <Button className="my-3" variant="warning" onClick={obtenerPersonaje}>
+        Obtener Personaje
+      </Button>
+    </main>
   );
 }
 
